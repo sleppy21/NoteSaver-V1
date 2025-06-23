@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import NoteForm from './NoteForm'
+import NoteList from './NoteList'
 
 function App() {
+  const [notes, setNotes] = useState([])
+
+  useEffect(() => {
+    const stored = localStorage.getItem("notes")
+    if (stored) setNotes(JSON.parse(stored))
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes))
+  }, [notes])
+
+  const addNote = (note) => {
+    setNotes([...notes, note])
+  }
+
+  const deleteNote = (index) => {
+    const updated = [...notes]
+    updated.splice(index, 1)
+    setNotes(updated)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ maxWidth: '600px', margin: 'auto' }}>
+      <h1>📝 NoteSaver</h1>
+      <NoteForm onAdd={addNote} />
+      <NoteList notes={notes} onDelete={deleteNote} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
