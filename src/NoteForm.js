@@ -1,41 +1,39 @@
 import React, { useState } from 'react'
+import { Form, Button, Card } from 'react-bootstrap'
 
 function NoteForm({ onAdd }) {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
   const handleSave = () => {
-    if (!title || !content) return
-    onAdd({ title, content })
-    setTitle("")
-    setContent("")
-  }
-
-  const handleDownload = () => {
-    const blob = new Blob([content], { type: "text/plain" })
-    const a = document.createElement("a")
-    a.href = URL.createObjectURL(blob)
-    a.download = `${title || "nota"}.txt`
-    a.click()
+    if (!title||!content) return
+    onAdd({ title, content, date: new Date().toLocaleString() })
+    setTitle(''); setContent('')
   }
 
   return (
-    <div>
-      <input
-        placeholder="Título"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        style={{ width: "100%", marginTop: 10 }}
-      />
-      <textarea
-        placeholder="Contenido"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-        style={{ width: "100%", height: 100, marginTop: 5 }}
-      />
-      <button onClick={handleSave}>Guardar</button>
-      <button onClick={handleDownload}>Descargar</button>
-    </div>
+    <Card className="mb-3">
+      <Card.Body>
+        <Form.Group className="mb-2">
+          <Form.Label>Título</Form.Label>
+          <Form.Control
+            value={title}
+            onChange={e=>setTitle(e.target.value)}
+            placeholder="Título"
+          />
+        </Form.Group>
+        <Form.Group className="mb-2">
+          <Form.Label>Contenido</Form.Label>
+          <Form.Control
+            as="textarea" rows={3}
+            value={content}
+            onChange={e=>setContent(e.target.value)}
+            placeholder="Escribe tu nota..."
+          />
+        </Form.Group>
+        <Button variant="success" onClick={handleSave}>Guardar</Button>
+      </Card.Body>
+    </Card>
   )
 }
 
