@@ -3,16 +3,17 @@ import { Form, Button, Card } from 'react-bootstrap'
 
 function NoteForm({ onAdd }) {
   const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
   const [content, setContent] = useState('')
 
   const handleSave = () => {
-    if (!title||!content) return
-    onAdd({ title, content, date: new Date().toLocaleString() })
-    setTitle(''); setContent('')
+    if (!title || !content) return
+    onAdd({ title, url: url||null, content, date: new Date().toLocaleString() })
+    setTitle(''); setUrl(''); setContent('')
   }
 
   return (
-    <Card className="mb-3">
+    <Card className="mb-3 note-card">
       <Card.Body>
         <Form.Group className="mb-2">
           <Form.Label>Título</Form.Label>
@@ -20,6 +21,14 @@ function NoteForm({ onAdd }) {
             value={title}
             onChange={e=>setTitle(e.target.value)}
             placeholder="Título"
+          />
+        </Form.Group>
+        <Form.Group className="mb-2">
+          <Form.Label>URL (opcional)</Form.Label>
+          <Form.Control
+            value={url}
+            onChange={e=>setUrl(e.target.value)}
+            placeholder="https://ejemplo.com"
           />
         </Form.Group>
         <Form.Group className="mb-2">

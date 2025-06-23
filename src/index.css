@@ -1,17 +1,23 @@
 body {
-  background: #f8f9fa;
+  background: #f0f0f0;
+  font-family: sans-serif;
 }
-.card {
-  transition: transform .2s, box-shadow .2s;
+.note-card {
+  background: #fffae3;
+  border: 1px solid #e1d6a7;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
 }
-.card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+.note-card .card-body {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 100% 1.5em;
 }
-.fade-enter {
-  opacity: 0;
+.card-title a {
+  color: #333;
+  text-decoration: none;
 }
-.fade-enter-active {
-  opacity: 1;
-  transition: opacity .5s ease-in;
+.card-title a:hover {
+  text-decoration: underline;
 }

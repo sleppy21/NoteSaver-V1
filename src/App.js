@@ -25,7 +25,8 @@ function App() {
 
   const filtered = notes.filter(n =>
     n.title.toLowerCase().includes(filter.toLowerCase()) ||
-    n.content.toLowerCase().includes(filter.toLowerCase())
+    n.content.toLowerCase().includes(filter.toLowerCase()) ||
+    (n.url && n.url.toLowerCase().includes(filter.toLowerCase()))
   )
 
   return (
@@ -37,7 +38,7 @@ function App() {
         <Col md={8}>
           <InputGroup>
             <FormControl
-              placeholder="Buscar notas..."
+              placeholder="Buscar..."
               value={filter}
               onChange={e=>setFilter(e.target.value)}
             />
@@ -52,11 +53,7 @@ function App() {
         <Col md={6}><NoteForm onAdd={addNote}/></Col>
         <Col md={6}>
           <p>Total: <Badge bg="info">{notes.length}</Badge></p>
-          <NoteList
-            notes={filtered}
-            onDelete={deleteNote}
-            onEdit={editNote}
-          />
+          <NoteList notes={filtered} onDelete={deleteNote} onEdit={editNote} />
         </Col>
       </Row>
     </Container>

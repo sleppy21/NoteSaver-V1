@@ -4,11 +4,11 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 function NoteList({ notes, onDelete, onEdit }) {
   const [editIdx, setEditIdx] = useState(null)
-  const [temp, setTemp] = useState({ title:'', content:'' })
+  const [temp, setTemp] = useState({ title:'', url:'', content:'' })
 
   const openEdit = (i,n) => {
     setEditIdx(i)
-    setTemp({ title:n.title, content:n.content })
+    setTemp({ title:n.title, url:n.url||'', content:n.content })
   }
   const saveEdit = () => {
     onEdit(editIdx, { ...temp, date: new Date().toLocaleString() })
@@ -21,9 +21,14 @@ function NoteList({ notes, onDelete, onEdit }) {
       <TransitionGroup className="list-unstyled">
         {notes.map((n,i) => (
           <CSSTransition key={i} timeout={500} classNames="fade">
-            <Card className="mb-2">
+            <Card className="mb-2 note-card">
               <Card.Body>
-                <Card.Title>{n.title}</Card.Title>
+                <Card.Title>
+                  {n.url
+                    ? <a href={n.url} target="_blank" rel="noopener noreferrer">{n.title}</a>
+                    : n.title
+                  }
+                </Card.Title>
                 <Card.Text>{n.content}</Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">{n.date}</Card.Subtitle>
                 <Button size="sm" variant="primary" onClick={()=>openEdit(i,n)}>Editar</Button>{' '}
@@ -42,6 +47,13 @@ function NoteList({ notes, onDelete, onEdit }) {
             <Form.Control
               value={temp.title}
               onChange={e=>setTemp({...temp, title:e.target.value})}
+            />
+          </Form.Group>
+          <Form.Group className="mb-2">
+            <Form.Label>URL</Form.Label>
+            <Form.Control
+              value={temp.url}
+              onChange={e=>setTemp({...temp, url:e.target.value})}
             />
           </Form.Group>
           <Form.Group>
