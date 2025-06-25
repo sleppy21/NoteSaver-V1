@@ -50,7 +50,7 @@ function NoteForm({ onAdd }) {
         <h5>Añadir nueva nota</h5>
         {err && <Alert variant="danger" onClose={() => setErr(null)} dismissible>{err}</Alert>}
         <Form.Group className="mb-2">
-          <Form.Label>Título (opcional si URL válida)</Form.Label>
+          <Form.Label>Título NoteSaver:</Form.Label>
           <Form.Control
             value={title}
             onChange={e => setTitle(e.target.value)}
@@ -58,7 +58,7 @@ function NoteForm({ onAdd }) {
           />
         </Form.Group>
         <Form.Group className="mb-2">
-          <Form.Label>URL (opcional si título)</Form.Label>
+          <Form.Label>Url / Pagina</Form.Label>
           <Form.Control
             value={url}
             onChange={e => setUrl(e.target.value)}
@@ -66,7 +66,7 @@ function NoteForm({ onAdd }) {
           />
         </Form.Group>
         <Form.Group className="mb-2">
-          <Form.Label>Contenido *</Form.Label>
+          <Form.Label>Contenido:</Form.Label>
           <Form.Control
             as="textarea" rows={4}
             value={content}
