@@ -1,23 +1,41 @@
 body {
-  background: #f0f0f0;
-  font-family: sans-serif;
+  background: #eef2f5;
+  font-family: 'Segoe UI', sans-serif;
 }
 .note-card {
-  background: #fffae3;
-  border: 1px solid #e1d6a7;
-  border-radius: 5px;
+  background: #fffbe6;
+  border: 1px solid #e0d8a7;
+  border-radius: 4px;
   font-family: 'Courier New', monospace;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
 }
 .note-card .card-body {
+  position: relative;
   background-image:
     linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
   background-size: 100% 1.5em;
+  padding: 1rem;
+  min-height: 120px;
 }
 .card-title a {
-  color: #333;
+  color: #2c3e50;
   text-decoration: none;
 }
 .card-title a:hover {
   text-decoration: underline;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 400ms ease-out;
 }
