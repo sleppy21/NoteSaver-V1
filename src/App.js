@@ -55,7 +55,7 @@ function App() {
   return (
     <Container className="py-4">
       <Row className="mb-3 align-items-center">
-        <Col><h1><Badge bg="secondary">NoteSaver Pro</Badge></h1></Col>
+        <Col><h1><Badge bg="secondary">NoteSaver v1.0</Badge></h1></Col>
         <Col className="text-end">
           <Button variant="outline-danger" onClick={clearAll} className="me-2">
             Borrar todo
