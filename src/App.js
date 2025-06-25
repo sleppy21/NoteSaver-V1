@@ -1,38 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import NoteForm from './NoteForm';
 import NoteList from './NoteList';
-import { Container, Row, Col, InputGroup, FormControl, Button, Badge } from 'react-bootstrap';
+import {
+  Container, Row, Col,
+  InputGroup, FormControl, Button, Badge
+} from 'react-bootstrap';
 
 function App() {
   const [notes, setNotes] = useState([]);
   const [filter, setFilter] = useState('');
 
+  // Carga inicial
   useEffect(() => {
     const stored = localStorage.getItem('notes');
     if (stored) setNotes(JSON.parse(stored));
   }, []);
 
+  // Guarda en cache
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  const addNote = note => setNotes([...notes, note]);
+  // Agrega nota al inicio
+  const addNote = note => setNotes([note, ...notes]);
   const deleteNote = idx => setNotes(notes.filter((_, i) => i !== idx));
   const editNote = (idx, updated) => {
-    const arr = [...notes];
-    arr[idx] = updated;
-    setNotes(arr);
+    const arr = [...notes]; arr[idx] = updated; setNotes(arr);
   };
   const clearAll = () => setNotes([]);
 
+  // Descargar todas
   const downloadAll = () => {
     if (!notes.length) return;
-    let text = notes.map(n => {
-      const header = `Título: ${n.title}\n` +
-                     (n.url ? `URL: ${n.url}\n` : '') +
-                     `Fecha: ${n.date}\n\n`;
-      return header + n.content;
-    }).join('\n\n' + '-'.repeat(40) + '\n\n');
+    const text = notes.map(n => {
+      let head = `Título: ${n.title}\n`;
+      if (n.url) head += `URL: ${n.url}\n`;
+      head += `Fecha: ${n.date}\n\n`;
+      return head + n.content;
+    }).join('\n' + '-'.repeat(40) + '\n\n');
     const blob = new Blob([text], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -40,6 +45,7 @@ function App() {
     a.click();
   };
 
+  // Filtrado
   const filtered = notes.filter(n =>
     n.title.toLowerCase().includes(filter.toLowerCase()) ||
     n.content.toLowerCase().includes(filter.toLowerCase()) ||
@@ -68,17 +74,13 @@ function App() {
               value={filter}
               onChange={e => setFilter(e.target.value)}
             />
-            <Button variant="outline-secondary" onClick={() => setFilter('')}>
-              ✕
-            </Button>
+            <Button variant="outline-secondary" onClick={() => setFilter('')}>✕</Button>
           </InputGroup>
         </Col>
       </Row>
 
       <Row>
-        <Col md={5}>
-          <NoteForm onAdd={addNote} />
-        </Col>
+        <Col md={5}><NoteForm onAdd={addNote} /></Col>
         <Col md={7}>
           <p>Total de notas: <Badge bg="info">{notes.length}</Badge></p>
           <NoteList
